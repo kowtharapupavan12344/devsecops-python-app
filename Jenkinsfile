@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/kowtharapupavan12344/devsecops-python-app.git'
+                git branch: 'main', url: 'https://github.com/kowtharapupavan12344/devsecops-python-app.git'
             }
         }
 
