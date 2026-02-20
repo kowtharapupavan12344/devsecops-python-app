@@ -2,14 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/kowtharapupavan12344/devsecops-python-app.git'
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
+                bat 'dir'
                 bat 'pip install -r requirements.txt'
             }
         }
