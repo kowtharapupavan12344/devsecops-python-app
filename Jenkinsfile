@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        sonarRunner 'sonar-scanner'
-    }
-
     stages {
 
         stage('Install Dependencies') {
@@ -20,7 +16,8 @@ pipeline {
                     sonar-scanner ^
                       -Dsonar.projectKey=devsecops-python-app ^
                       -Dsonar.sources=. ^
-                      -Dsonar.host.url=http://localhost:9000
+                      -Dsonar.host.url=http://localhost:9000 ^
+                      -Dsonar.login=%SONAR_AUTH_TOKEN%
                     """
                 }
             }
