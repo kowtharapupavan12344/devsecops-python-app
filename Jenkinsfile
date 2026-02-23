@@ -1,18 +1,34 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQubeScanner 'sonar-scanner'
+    }
+
     stages {
 
         stage('Install Dependencies') {
             steps {
-                bat 'dir'
                 bat 'pip install -r requirements.txt'
             }
         }
 
-        stage('Run App Test') {
+        stage('SonarQube Scan') {
             steps {
-                bat 'python app/pythonproj/app.py'
+                withSonarQubeEnv('sonarqube') {
+                    bat """
+                    sonar-scanner ^
+                      -Dsonar.projectKey=devsecops-python-app ^
+                      -Dsonar.sources=. ^
+                      -Dsonar.host.url=http://localhost:9000
+                    """
+                }
+            }
+        }
+
+        stage('Run Syntax Check') {
+            steps {
+                bat 'python -m py_compile app/pythonproj/app.py'
             }
         }
     }
