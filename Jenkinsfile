@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        sonarQubeScanner 'sonar-scanner'
+        sonarRunner 'sonar-scanner'
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Run Syntax Check') {
+        stage('Syntax Check') {
             steps {
                 bat 'python -m py_compile app/pythonproj/app.py'
             }
