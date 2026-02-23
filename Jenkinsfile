@@ -16,10 +16,21 @@ pipeline {
                     sonar-scanner ^
                       -Dsonar.projectKey=devsecops-python-app ^
                       -Dsonar.sources=. ^
-                      -Dsonar.host.url=http://localhost:9000 ^
-                      -Dsonar.login=%SONAR_AUTH_TOKEN%
+                      -Dsonar.host.url=http://localhost:9000
                     """
                 }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t devsecops-python-app .'
+            }
+        }
+
+        stage('Trivy Scan') {
+            steps {
+                bat 'trivy image devsecops-python-app'
             }
         }
 
